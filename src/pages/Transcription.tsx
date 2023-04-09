@@ -6,27 +6,7 @@ import { HOMECONF } from "../config/constants";
 import logo from "../assets/logodata354.jpeg";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { useForm } from "@mantine/form";
-
-const useStyles = createStyles((theme) => ({
-  footer: {
-    justifyContent: "center",
-    alignItems: "center",
-    borderTop: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[2]
-      }`,
-  },
-
-  inner: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center",
-    flexDirection: "column",
-    marginLeft: 0,
-    paddingTop: theme.spacing.sm,
-    paddingBottom: theme.spacing.sm,
-  },
-}))
+import AppFooter from "../components/AppFooter";
 
 const AppHeader = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -74,22 +54,6 @@ const AppHeader = () => {
         </Group>
       </Group>
     </Header>
-  );
-};
-
-const AppFooter = () => {
-  const { classes } = useStyles();
-  return (
-    <Group className={classes.footer}>
-      <Stack className={classes.inner}>
-        <Text size="xs" color="dimmed">
-          <br />
-          {`Designed & built by Data354, 2023 CIV 🇨🇮`}
-          <br />
-          {`All rights reserved`}
-        </Text>
-      </Stack>
-    </Group>
   );
 };
 
