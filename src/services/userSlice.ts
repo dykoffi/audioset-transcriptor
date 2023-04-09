@@ -14,7 +14,10 @@ interface User {
   notif: true | false
   popup: true | false
   loading: boolean
-  stats: any
+  stats: {
+    sounds: number
+    passedSounds: number
+  }
   statsLoading: boolean
   sound: {
     id_: number,
@@ -31,7 +34,10 @@ let initialState: User = {
   transcriptor: COOKIES.get("transcriptor_info"),
   notif: false,
   popup: false,
-  stats: {},
+  stats: {
+    sounds: 0,
+    passedSounds: 0
+  },
   sound: null
 }
 
@@ -72,6 +78,54 @@ export const getSound = createAsyncThunk("transcriptor/getsound", async (arg: un
   ApiClient.get(`/transcriptor/${state.user.transcriptor?.id_}/getsound`)
     .then(({ data }) => {
       dispatch(setSound(data))
+      dispatch(setLoading(false))
+    })
+    .catch((err) => {
+      dispatch(setLoading(false))
+      dispatch(setNotif(true))
+      console.log(err);
+    })
+})
+
+export const transcriptSound = createAsyncThunk("transcriptor/transcriptsound", async (transcript: string, { dispatch, getState }) => {
+  dispatch(setLoading(true))
+  let state: any = getState()
+  ApiClient.post(`/transcriptor/${state.user.transcriptor?.id_}/transcriptsound`, { transcript })
+    .then(({ data }) => {
+      dispatch(getSound())
+      dispatch(statsSound())
+      dispatch(setLoading(false))
+    })
+    .catch((err) => {
+      dispatch(setLoading(false))
+      dispatch(setNotif(true))
+      console.log(err);
+    })
+})
+
+export const passSound = createAsyncThunk("transcriptor/passsound", async (arg: undefined, { dispatch, getState }) => {
+  dispatch(setLoading(true))
+  let state: any = getState()
+  ApiClient.get(`/transcriptor/${state.user.transcriptor?.id_}/passsound`)
+    .then(({ data }) => {
+      dispatch(getSound())
+      dispatch(statsSound())
+      dispatch(setLoading(false))
+    })
+    .catch((err) => {
+      dispatch(setLoading(false))
+      dispatch(setNotif(true))
+      console.log(err);
+    })
+})
+
+export const statsSound = createAsyncThunk("transcriptor/statssound", async (arg: undefined, { dispatch, getState }) => {
+  dispatch(setStatsLoading(true))
+  let state: any = getState()
+  ApiClient.get(`/transcriptor/${state.user.transcriptor?.id_}/statssound`)
+    .then(({ data }) => {
+      dispatch(setStats(data))
+      dispatch(setStatsLoading(false))
     })
     .catch((err) => {
       dispatch(setLoading(false))
