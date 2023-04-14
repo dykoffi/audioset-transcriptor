@@ -112,7 +112,11 @@ export default function Transcription() {
             </Skeleton>
 
           </Container>
-          <Button onClick={() => audio.play()} disabled={isPlaying || user.sound === null} className="bg-blue-100" variant="light" size="lg" leftIcon={isPlaying ? <Loader color="blue.3" size={"xs"} variant="bars" /> : <IconVolume size="1rem" />}>
+          <Button
+            onClick={() => audio.play()}
+            disabled={isPlaying || user.sound === null || user.loading}
+            className="bg-blue-100" variant="light" size="lg"
+            leftIcon={isPlaying ? <Loader color="blue.3" size={"xs"} variant="bars" /> : <IconVolume size="1rem" />}>
             Ecouter la version dioula
           </Button>
           <Container size={800} className="w-full" p={20}>

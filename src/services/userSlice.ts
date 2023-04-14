@@ -110,7 +110,6 @@ export const passSound = createAsyncThunk("transcriptor/passsound", async (arg: 
     .then(({ data }) => {
       dispatch(getSound())
       dispatch(statsSound())
-      dispatch(setLoading(false))
     })
     .catch((err) => {
       dispatch(setLoading(false))
