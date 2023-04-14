@@ -1,10 +1,7 @@
 import {
   TextInput,
   PasswordInput,
-  Anchor,
-  Title,
   Text,
-  Container,
   Button,
   LoadingOverlay,
   Stack,
@@ -12,14 +9,13 @@ import {
   useMantineTheme,
   Notification,
   Center,
-  Group,
-  Grid,
+  Avatar,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import logo from "../assets/logodata354.jpeg";
 import { AppDispatch, RootState } from '../services/store';
 import { logintranscriptor, setNotif } from '../services/userSlice';
 import AppFooter from '../components/AppFooter';
@@ -50,18 +46,22 @@ export default function Authentication() {
   }, [])
 
   return (
-    <Stack className='h-screen w-screen bg-cover ' style={{ backgroundImage: `url(${background})` }}  >
+    <Stack className='h-screen w-screen bg-cover' style={{ backgroundImage: `url(${background})` }}  >
       <Stack className='flex-1 backdrop-blur-md'>
         <Center className='flex-1'>
           <form className='w-1/4 bg-white p-10 backdrop-blur-md opacity-90' onSubmit={form.onSubmit((values) => dispatch(logintranscriptor(values)))}>
             <Stack className='h-full'>
               <Stack className='flex-1'>
-                <Title
-                  align="center"
-                  sx={(theme) => ({ fontFamily: `Greycliff CF, ${theme.fontFamily}`, fontWeight: 900 })}
-                >
-                  Sign in
-                </Title>
+                <Stack align='center'>
+                  <Avatar size={60} src={logo} />
+                  <Text
+                    size={20}
+                    weight={800}
+                    align="center"
+                  >
+                    Transcriptor Signin
+                  </Text>
+                </Stack>
                 <Stack p={10} mt={10} spacing="md">
                   <TextInput size='md' label="Email" {...form.getInputProps("email")} required />
                   <PasswordInput {...form.getInputProps("password")} size='md' label="Password" required />
