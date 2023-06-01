@@ -1,11 +1,11 @@
 import { ActionIcon, Avatar, Badge, Button, Center, Code, Container, Group, Header, Loader, Menu, Skeleton, Stack, Text, Textarea, Tooltip, createStyles } from "@mantine/core";
-import { IconChecks, IconChevronRight, IconChevronsRight, IconDatabase, IconLogout, IconVolume } from "@tabler/icons";
+import { IconArrowUp, IconChecks, IconChevronRight, IconChevronsRight, IconDatabase, IconLogout, IconTiltShift, IconVolume } from "@tabler/icons";
 import { RootState, store } from "../services/store";
 import { getSound, logouttranscriptor, passSound, statsSound, transcriptSound } from "../services/userSlice";
 import { HOMECONF } from "../config/constants";
 import logo from "../assets/logodata354.jpeg";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AppFooter from "../components/AppFooter";
 
 const AppHeader = () => {
@@ -64,6 +64,8 @@ export default function Transcription() {
   const [audioListen, setAudioListen] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false);
   const [transcript, setTranscript] = useState("")
+  const [shift, setShift] = useState(false)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   useEffect(() => {
     store.dispatch(getSound())
@@ -73,6 +75,9 @@ export default function Transcription() {
   useEffect(() => {
     setAudio(new Audio(user.sound?.targetAudioLink))
     setAudioListen(false)
+    new Audio(user.sound?.targetAudioLink).addEventListener("ended", () => {
+      console.log(audio.duration);
+    })
   }, [user.sound])
 
   useEffect(() => {
@@ -123,6 +128,7 @@ export default function Transcription() {
             <Textarea
               placeholder={audioListen ? "Transcription" : "Ecoutez l'audio avant de transcrire svp"}
               className="text-5xl"
+              ref={textareaRef}
               size="lg"
               value={transcript}
               disabled={!audioListen}
@@ -130,6 +136,30 @@ export default function Transcription() {
               minRows={3}
               onChange={(ev) => { setTranscript(ev.target.value) }}
             />
+          </Container>
+          <Container p={20}>
+            <Group>
+              <Button disabled={!audioListen} color="blue" className={shift ? "bg-blue-500" : "bg-white text-blue-900"} size="xl" onClick={() => {
+                setShift(!shift)
+                textareaRef.current?.focus()
+              }} >Shift <IconArrowUp /></Button>
+              <Button disabled={!audioListen} onClick={() => {
+                setTranscript(transcript + (!shift ? "ɛ" : "Ɛ"))
+                textareaRef.current?.focus()
+              }} size="xl" variant="outline">{!shift ? "ɛ" : "Ɛ"}</Button>
+              <Button disabled={!audioListen} onClick={() => {
+                setTranscript(transcript + (!shift ? "ɔ" : "Ɔ"))
+                textareaRef.current?.focus()
+              }} size="xl" variant="outline">{!shift ? "ɔ" : "Ɔ"}</Button>
+              <Button disabled={!audioListen} onClick={() => {
+                setTranscript(transcript + (!shift ? "ŋ" : "Ŋ"))
+                textareaRef.current?.focus()
+              }} size="xl" variant="outline">{!shift ? "ŋ" : "Ŋ"}</Button>
+              <Button disabled={!audioListen} onClick={() => {
+                setTranscript(transcript + (!shift ? "ɲ" : "Ɲ"))
+                textareaRef.current?.focus()
+              }} size="xl" variant="outline">{!shift ? "ɲ" : "Ɲ"}</Button>
+            </Group>
           </Container>
           <Container p={20}>
             <Group>

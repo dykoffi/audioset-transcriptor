@@ -94,7 +94,6 @@ export const transcriptSound = createAsyncThunk("transcriptor/transcriptsound", 
     .then(({ data }) => {
       dispatch(getSound())
       dispatch(statsSound())
-      dispatch(setLoading(false))
     })
     .catch((err) => {
       dispatch(setLoading(false))
