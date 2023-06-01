@@ -139,7 +139,7 @@ export default function Transcription() {
           </Container>
           <Container p={20}>
             <Group>
-              <Button disabled={!audioListen} color="blue" className={shift ? "bg-blue-500" : "bg-white text-blue-900"} size="xl" onClick={() => {
+              <Button disabled={!audioListen} variant="outline" className={shift ? "bg-blue-700 hover:bg-blue-800 text-white" : "bg-white text-blue-900"} size="xl" onClick={() => {
                 setShift(!shift)
                 textareaRef.current?.focus()
               }} >Shift <IconArrowUp /></Button>
@@ -166,11 +166,13 @@ export default function Transcription() {
               <Button disabled={transcript.trim().length === 0} onClick={() => {
                 store.dispatch(transcriptSound(transcript))
                 setTranscript("")
+                setAudioListen(false)
               }} variant="outline" color="green" size="md" leftIcon={<IconChecks size="1rem" />}>
                 Valider la Transcription
               </Button>
               <Button onClick={() => {
                 store.dispatch(passSound())
+                setAudioListen(false)
               }}
                 disabled={!audioListen} variant="outline" color="gray" size="md" rightIcon={<IconChevronsRight size="1rem" />}>
                 Passer à un autre
