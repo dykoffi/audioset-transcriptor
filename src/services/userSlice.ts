@@ -72,20 +72,20 @@ export const logintranscriptor = createAsyncThunk("transcriptor/signin", async (
     })
 })
 
-export const getSound = createAsyncThunk("transcriptor/getsound", async (arg: undefined, { dispatch, getState }) => {
-  dispatch(setLoading(true))
-  let state: any = getState()
-  ApiClient.get(`/transcriptor/${state.user.transcriptor?.id_}/getsound`)
-    .then(({ data }) => {
-      dispatch(setSound(data))
-      dispatch(setLoading(false))
-    })
-    .catch((err) => {
-      dispatch(setLoading(false))
-      dispatch(setNotif(true))
-      console.log(err);
-    })
-})
+  export const getSound = createAsyncThunk("transcriptor/getsound", async (arg: undefined, { dispatch, getState }) => {
+    dispatch(setLoading(true))
+    let state: any = getState()
+    ApiClient.get(`/transcriptor/${state.user.transcriptor?.id_}/getsound`)
+      .then(({ data }) => {
+        dispatch(setSound(data))
+        dispatch(setLoading(false))
+      })
+      .catch((err) => {
+        dispatch(setLoading(false))
+        dispatch(setNotif(true))
+        console.log(err);
+      })
+  })
 
 export const transcriptSound = createAsyncThunk("transcriptor/transcriptsound", async (transcript: string, { dispatch, getState }) => {
   dispatch(setLoading(true))
