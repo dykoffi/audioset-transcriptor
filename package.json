@@ -8,7 +8,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview", 
     "docker:build": "DOCKER_BUILDKIT=1 docker build -t europe-west3-docker.pkg.dev/dev-clients-307710/audioset/app-transcriptor .",
-    "docker:push": "docker push europe-west3-docker.pkg.dev/dev-clients-307710/audioset/app-transcriptor"
+    "docker:push": "docker push europe-west3-docker.pkg.dev/dev-clients-307710/audioset/app-transcriptor",
+    "publish:cloud": "yarn build && yarn docker:build && yarn docker:push"
   },
   "dependencies": {
     "@babel/core": "^7.0.0",
